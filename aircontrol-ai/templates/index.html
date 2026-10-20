@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirControl AI - Web Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="hero-title">🖐️ AirControl AI</h1>
+            <p class="hero-subtitle">Next-Generation Touchless Computer Control & Interactive Air Canvas</p>
+        </header>
+
+        <div class="main-layout">
+            <aside class="sidebar glass-card">
+                <h2>⚙️ Control Panel</h2>
+                
+                <div class="form-group">
+                    <label>🎯 Active Function</label>
+                    <select id="modeSelect" onchange="updateSettings()">
+    <option value="Volume Control">Volume Control</option>
+    <option value="Brightness Control">Brightness Control</option>
+    <option value="Air Drawing">Air Drawing</option>
+    <option value="Air Mouse">Air Mouse</option>
+                    </select>
+                </div>
+
+                <div id="drawingControls" class="conditional-section" style="display: none;">
+                    <hr>
+                    <h3>🎨 Canvas Tools</h3>
+                    <div class="form-group">
+                        <label>Tool / Color</label>
+                        <select id="toolColor" onchange="updateSettings()">
+                            <option value="#FF00FF">Magenta Brush</option>
+                            <option value="#0000FF">Blue Brush</option>
+                            <option value="#00FF00">Green Brush</option>
+                            <option value="#FF0000">Red Brush</option>
+                            <option value="eraser">🧹 Eraser Mode</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Brush / Eraser Size: <span id="sizeVal">8</span>px</label>
+                        <input type="range" id="brushSize" min="2" max="40" value="8" oninput="document.getElementById('sizeVal').innerText=this.value; updateSettings();">
+                    </div>
+                    <button class="btn-danger" onclick="clearCanvas()">🗑️ Clear Canvas</button>
+                </div>
+
+                <div id="calibrationControls" class="conditional-section">
+                    <hr>
+                    <h3>📐 Calibration</h3>
+                    <div class="form-group">
+                        <label>Min Distance: <span id="minVal">30</span>px</label>
+                        <input type="range" id="minDist" min="10" max="100" value="30" oninput="document.getElementById('minVal').innerText=this.value; updateSettings();">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Distance: <span id="maxVal">140</span>px</label>
+                        <input type="range" id="maxDist" min="80" max="300" value="140" oninput="document.getElementById('maxVal').innerText=this.value; updateSettings();">
+                    </div>
+                </div>
+
+                <div id="mediaInfo" class="conditional-section" style="display: none;">
+                    <hr>
+                    <h3>🎵 Gesture Shortcuts</h3>
+                    <ul class="info-list">
+                        <li><b>Thumb + Index Pinch:</b> Play / Pause</li>
+                        <li><b>Thumb + Middle Pinch:</b> Next Track</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="viewer-section">
+                <div class="glass-card video-card">
+                    <div class="status-badge" id="currentModeBadge">Mode: Volume Control</div>
+                    <div class="video-container">
+                        <img src="{{ url_for('video_feed') }}" alt="Live Camera Feed">
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer class="air-footer">
+            AirControl AI • Developed by Sammar
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
